@@ -267,7 +267,7 @@ void MainWindow::test(QString str)
         
     }
    
-    QRegularExpression re1(R"((PUSHBUTTON)\s+\"(.*)\",(\w+),(\d+),(\d+),(\d+),(\d+),(.+))");//能查中中文。
+    QRegularExpression re1(R"((PUSHBUTTON)\s+\"(.*)\",(\w+),(\d+),(\d+),(\d+),(\d+),(.+))");//能查中中文。//同时能找到defbutton
     QRegularExpression re1(R"((PUSHBUTTON)\s+\"(.?)\",(\w+),(\d+),(\d+),(\d+),(\d+),(.+))");//能查中button的空名字或者空的。
     QRegularExpressionMatchIterator i1 = re1.globalMatch(str);
     while (i1.hasNext())
@@ -293,8 +293,6 @@ void MainWindow::test(QString str)
         }
         
     }
-    
-
     QRegularExpression re2(R"((CONTROL)\s+"\(.*)\", (\w + ), "\(\w+)\", (.+)(\d+), (\d+), (\d+), (\d+))");
 
     QRegularExpressionMatchIterator i2 = re2.globalMatch(str);
@@ -332,3 +330,4 @@ void MainWindow::on_pushButtonConvert_clicked()
     SplitContent(str);
 }
 
+//(\w+)\s+"(.*)",(\w+),(\d+),(\d+),(\d+),(\d+)  能匹配绝大部分
