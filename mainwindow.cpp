@@ -562,7 +562,7 @@ void MainWindow::converDialog(QString str)
             QString fontSize;
             QString controlText="ISNULL";
             outDialogMessage(DialogID, fontName, fontSize, controlText, x, y, width, height);
-            ui->comboBox->addItem(DialogID);
+           // ui->comboBox->addItem(DialogID);
             return;
         }
     }
