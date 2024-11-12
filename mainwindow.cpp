@@ -73,12 +73,12 @@ MainWindow::MainWindow(QWidget *parent)
         line = in.readAll();//循环读取下行
             //line.contains
        // SplitContent(line);
-        ui->textEditshow->append(line);
+       // ui->textEditshow->append(line);
         
     }
 
     file.close();
-    ui->textEditshow->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+    //ui->textEditshow->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
     connect(ui->pushButton_export, &QPushButton::clicked, this, &MainWindow::exportUIfile);
     connect(ui->pushButton_check, &QPushButton::clicked, this, &MainWindow::checkContent);
     connect(ui->pushButton_clearTablewidget, &QPushButton::clicked, this, &MainWindow::clearTableWidget);
@@ -116,11 +116,11 @@ void MainWindow::on_pushButton_clicked()
         while(!line.isNull())//字符串有内容
         {
             line=in.readLine();//循环读取下行
-            ui->textEditshow->append(line);
+            //ui->textEditshow->append(line);
         }
     }
     file.close();
-    ui->textEditshow ->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
+   // ui->textEditshow ->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
 }
 
 void MainWindow::on_pushButton_2_clicked()
@@ -128,32 +128,32 @@ void MainWindow::on_pushButton_2_clicked()
 
 
     //找到begin 和 end 并高亮
-    if(!ui->textEditshow->toPlainText().isEmpty())
-    {
-        int m_begin=0,m_end=0;
-        if(ui->textEditshow->find(QString("BEGIN"),QTextDocument::FindCaseSensitively))
-        {
-         QTextCursor tc = ui->textEditshow->textCursor(); //当前光标
-         m_begin = tc.blockNumber()+1;
-         }
+    //if(!ui->textEditshow->toPlainText().isEmpty())
+    //{
+    //    int m_begin=0,m_end=0;
+    //    if(ui->textEditshow->find(QString("BEGIN"),QTextDocument::FindCaseSensitively))
+    //    {
+    //     QTextCursor tc = ui->textEditshow->textCursor(); //当前光标
+    //     m_begin = tc.blockNumber()+1;
+    //     }
 
 
-       if( ui->textEditshow->find(QString("END"),QTextDocument::FindCaseSensitively))
-       {
-        QPalette palette1 = ui->textEditshow->palette();
+    //   if( ui->textEditshow->find(QString("END"),QTextDocument::FindCaseSensitively))
+    //   {
+    //    QPalette palette1 = ui->textEditshow->palette();
 
-         QTextCursor tc = ui->textEditshow->textCursor(); //当前光标
-
-
-         m_end = tc.blockNumber()-1;
-         current_begin=m_begin;
-         current_end=m_end;
+    //     QTextCursor tc = ui->textEditshow->textCursor(); //当前光标
 
 
-         //clearHighlightsInRange(ui->textEditshow,last_begin,last_end);
-         highlightLines(m_begin, m_end, QColor(Qt::yellow));
-        }
-    }
+    //     m_end = tc.blockNumber()-1;
+    //     current_begin=m_begin;
+    //     current_end=m_end;
+
+
+    //     //clearHighlightsInRange(ui->textEditshow,last_begin,last_end);
+    //     highlightLines(m_begin, m_end, QColor(Qt::yellow));
+    //    }
+    //}
 
 }
 
@@ -165,7 +165,7 @@ void MainWindow::highlightLines(int startLine, int endLine, const QColor& color)
     last_begin=startLine;
     last_end=endLine;
 
-    QTextDocument* doc = ui->textEditshow->document();
+    QTextDocument* doc;//= ui->textEditshow->document();
     QTextCursor cursor(doc);
 
     QTextCharFormat format;
@@ -183,7 +183,7 @@ void MainWindow::highlightLines(int startLine, int endLine, const QColor& color)
 
 void MainWindow::on_selectAndHightPB_clicked()
 {
-      QTextCursor cursor=ui->textEditshow->textCursor();
+    QTextCursor cursor;//=ui->textEditshow->textCursor();
       int start = cursor.selectionStart();
       int end = cursor.selectionEnd();
 
@@ -195,12 +195,12 @@ void MainWindow::on_selectAndHightPB_clicked()
       int startLine = startCursor.blockNumber();
       int endLine = endCursor.blockNumber();
 
-      for (int line = startLine; line <= endLine; ++line)
+     /* for (int line = startLine; line <= endLine; ++line)
       {
           QTextBlock block = ui->textEditshow->document()->findBlockByNumber(line);
 
           ui->textEditRcKeyContent->append(block.text());
-      }
+      }*/
 }
 
 void MainWindow::on_textEditshow_cursorPositionChanged()

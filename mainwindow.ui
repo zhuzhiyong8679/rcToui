@@ -180,9 +180,6 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
-       <widget class="QTextEdit" name="textEditshow"/>
-      </item>
-      <item>
        <widget class="QTextEdit" name="textEditRcKeyContent"/>
       </item>
       <item>
