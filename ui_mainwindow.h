@@ -55,7 +55,6 @@ public:
     QPushButton *pushButton_check;
     QPushButton *pushButton_export;
     QHBoxLayout *horizontalLayout_3;
-    QTextEdit *textEditshow;
     QTextEdit *textEditRcKeyContent;
     QTableWidget *tableWidget;
     QStatusBar *statusbar;
@@ -182,11 +181,6 @@ public:
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        textEditshow = new QTextEdit(centralwidget);
-        textEditshow->setObjectName(QString::fromUtf8("textEditshow"));
-
-        horizontalLayout_3->addWidget(textEditshow);
-
         textEditRcKeyContent = new QTextEdit(centralwidget);
         textEditRcKeyContent->setObjectName(QString::fromUtf8("textEditRcKeyContent"));
 
