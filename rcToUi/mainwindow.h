@@ -1,13 +1,10 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QMainWindow>
 #include "QMap"
 #include <QString>
 #include "QtWidgets"
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
+#include "ui/ui_mainwindow.h"
 
 struct DialogMes
 {
@@ -81,4 +78,4 @@ private:
     QMap<QString, QString>mfcToQtUiMessage;
     QString currentUi;
 };
-#endif // MAINWINDOW_H
+

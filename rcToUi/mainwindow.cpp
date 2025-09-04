@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
 #include "QFileDialog"
 #include "QDebug"
 #include "QTextDocument"
@@ -111,7 +110,7 @@ void MainWindow::on_pushButton_clicked()
     {
         QString line;
         QTextStream in(&file);  //用文件构造流
-        line = in.readLine();//读取一行放到字符串里
+        line = in.readLine();//读取一行放到字符串�?
         qDebug() << line;
         while(!line.isNull())//字符串有内容
         {
@@ -127,7 +126,7 @@ void MainWindow::on_pushButton_2_clicked()
 {
 
 
-    //找到begin 和 end 并高亮
+    //找到begin �? end 并高�?
     //if(!ui->textEditshow->toPlainText().isEmpty())
     //{
     //    int m_begin=0,m_end=0;
@@ -172,7 +171,7 @@ void MainWindow::highlightLines(int startLine, int endLine, const QColor& color)
     format.setBackground(color);
 
     for (int i = startLine; i <= endLine; ++i) {
-        QTextBlock block = doc->findBlockByNumber(i); // 行号从0开始
+        QTextBlock block = doc->findBlockByNumber(i); // 行号�?0开�?
         if (block.isValid()) {
             cursor.setPosition(block.position());
             cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
@@ -250,7 +249,7 @@ void MainWindow::addInfoToQTableWidget(QString& type, QString& id, QString& text
 
 void MainWindow::SplitContent(QString&str)
 {
-    // 将内容按行分割
+    // 将内容按行分�?
    
     QStringList lines = str.split('\n', QString::SkipEmptyParts);
 
@@ -331,7 +330,7 @@ void MainWindow::SpitStrAndExportUiTextEdit(QString str)
         
     }
    
-    QRegularExpression re1(R"((PUSHBUTTON)\s+\"(.*)\",(\w+),(\d+),(\d+),(\d+),(\d+),(.+))");//能查中中文。//同时能找到defbutton
+    QRegularExpression re1(R"((PUSHBUTTON)\s+\"(.*)\",(\w+),(\d+),(\d+),(\d+),(\d+),(.+))");//能查中中文�?//同时能找到defbutton
    
     QRegularExpressionMatchIterator i1 = re1.globalMatch(str);
     while (i1.hasNext())
@@ -370,7 +369,7 @@ void MainWindow::SpitStrAndExportUiTextEdit(QString str)
             return;
         }
     }
-    QRegularExpression re3(R"((PUSHBUTTON)\s+\"(.?)\",(\w+),(\d+),(\d+),(\d+),(\d+),(.+))");//能查中button的空名字或者空的。
+    QRegularExpression re3(R"((PUSHBUTTON)\s+\"(.?)\",(\w+),(\d+),(\d+),(\d+),(\d+),(.+))");//能查中button的空名字或者空的�?
     QRegularExpressionMatchIterator i3 = re3.globalMatch(str);
     while (i3.hasNext())
     {
@@ -389,7 +388,7 @@ void MainWindow::SpitStrAndExportUiTextEdit(QString str)
             return;
         }
     }
-    QRegularExpression re4(R"((GROUPBOX)\s + \"(.*)\", (\w+), (\d+), (\d+), (\d+), (\d+), (.+))");//能查中button的空名字或者空的。
+    QRegularExpression re4(R"((GROUPBOX)\s + \"(.*)\", (\w+), (\d+), (\d+), (\d+), (\d+), (.+))");//能查中button的空名字或者空的�?
     QRegularExpressionMatchIterator i4 = re4.globalMatch(str);
     while (i4.hasNext())
     {
@@ -511,7 +510,7 @@ void MainWindow::converDialog(QString str)
             
            
 
-            // 定义正则表达式匹配 FONT 关键字后面的内容
+            // 定义正则表达式匹�? FONT 关键字后面的内容
             QRegularExpression fontRegex(R"(FONT\s+(\d+),\s*\"([^\"]+)\")");
             QRegularExpressionMatch match = fontRegex.match(str);
             QString fontSize=9;
@@ -568,7 +567,7 @@ void MainWindow::converDialog(QString str)
     }
 }
 
-//分割字符串
+//分割字符�?
 void MainWindow::on_pushButtonConvert_clicked()
 {
     if (ui->textEditRcKeyContent->toPlainText().isEmpty())return;
@@ -576,7 +575,7 @@ void MainWindow::on_pushButtonConvert_clicked()
     SplitContent(str);
 }
 
-//(\w+)\s+"(.*)",(\w+),(\d+),(\d+),(\d+),(\d+)  能匹配绝大部分
+//(\w+)\s+"(.*)",(\w+),(\d+),(\d+),(\d+),(\d+)  能匹配绝大部�?
 //输出文件
 void MainWindow::exportUIfile()
 {
