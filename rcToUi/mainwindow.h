@@ -69,7 +69,7 @@ private:
     DialogMes last_dialogmessage;
     void ExportUItoFile(QString& filename,QString&str);
     
-    //开始组装最后的qt ui
+    //寮�濮嬬粍瑁呮渶鍚庣殑qt ui
     QString Start_the_assembly(QString type, QString Id, QString text, QString x, QString y, QString width, QString height);
 
     QString setHeadfilestrQDialog(DialogMes&current_message);

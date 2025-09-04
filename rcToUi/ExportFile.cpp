@@ -8,23 +8,23 @@
 #include "QProcess"
 void MainWindow::ExportUItoFile(QString&mfilename,QString &str)
 {
-    // ÎÄ¼şÃû
+    // æ–‡ä»¶å
     QString fileName = mfilename + QString(".ui");
 
-    // ´´½¨²¢´ò¿ªÎÄ¼ş
+    // åˆ›å»ºå¹¶æ‰“å¼€æ–‡ä»¶
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qDebug() << "Cannot open file for writing:" << file.errorString();
         return ;
     }
 
-    // ´´½¨ÎÄ±¾Á÷
+    // åˆ›å»ºæ–‡æœ¬æµ
     QTextStream out(&file);
     out.setCodec("UTF-8");
-    // Ğ´ÈëÄÚÈİ
+    // å†™å…¥å†…å®¹
     out << str << endl;
     
-    // ¹Ø±ÕÎÄ¼ş
+    // å…³é—­æ–‡ä»¶
     file.close();
     QString uiFile = fileName;
     QString hFile = QString("ui_")+mfilename+QString(".h");
@@ -72,7 +72,7 @@ QString MainWindow::Start_the_assembly(QString type, QString Id, QString text, Q
     else
     {
         QMessageBox qb;
-        qb.information(this, tr("²»´æÔÚµÄÀàĞÍ"), type);
+        qb.information(this, tr("ä¸å­˜åœ¨çš„ç±»å‹"), type);
         newtype = "QLable";
     }
     str.replace("_type", newtype)
@@ -103,7 +103,7 @@ QString MainWindow::setHeadfilestrQWidget(DialogMes&dialogmessage)
 </property>
 <property name="font">
 <font>
-<family>Adobe ËÎÌå Std L</family>
+<family>Adobe å®‹ä½“ Std L</family>
 <pointsize>9</pointsize>
 </font>
 </property>
@@ -136,7 +136,7 @@ QString MainWindow::setHeadfilestrQDialog(DialogMes& dialogmessage)
 </property>
 <property name="font">
 <font>
-<family>Adobe ËÎÌå Std L</family>
+<family>Adobe å®‹ä½“ Std L</family>
 <pointsize>9</pointsize>
 </font>
 </property>
