@@ -84,7 +84,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_clearTextedit, &QPushButton::clicked, this, &MainWindow::clearTextedit);
     connect(ui->pushButton_insertCurrent,  &QPushButton::clicked, this, &MainWindow::addTablewidgetItem);
     connect(ui->pushButton_deleteCurrent, &QPushButton::clicked, this, &MainWindow::deleteTableWidgetItem);
-    connect(ui->pushButton_compile, &QPushButton::clicked, this, &MainWindow::compileopenfile);
+	connect(ui->pushButton_compile, &QPushButton::clicked, this, &MainWindow::compileopenfile);
+
+	connect(ui->pushButtonConvert, &QPushButton::clicked, this, &MainWindow::on_pushButtonConvert_clicked);
+	connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::on_pushButton_clicked);
+	connect(ui->pushButton_2, &QPushButton::clicked, this, &MainWindow::on_pushButton_2_clicked);
+	connect(ui->selectAndHightPB, &QPushButton::clicked, this, &MainWindow::on_selectAndHightPB_clicked);
+
    // connect(ui->checkBox, &QCheckBox::stateChanged, this, &MainWindow::test);
     ui->comboBox->addItem(QString("QDialog"));
     ui->comboBox->addItem(QString("QWidget"));
@@ -110,7 +116,7 @@ void MainWindow::on_pushButton_clicked()
     {
         QString line;
         QTextStream in(&file);  //用文件构造流
-        line = in.readLine();//读取一行放到字符串�?
+        line = in.readLine();//读取一行放到字符串�?
         qDebug() << line;
         while(!line.isNull())//字符串有内容
         {
@@ -126,7 +132,7 @@ void MainWindow::on_pushButton_2_clicked()
 {
 
 
-    //找到begin �? end 并高�?
+    //找到begin �? end 并高�?
     //if(!ui->textEditshow->toPlainText().isEmpty())
     //{
     //    int m_begin=0,m_end=0;
@@ -171,7 +177,7 @@ void MainWindow::highlightLines(int startLine, int endLine, const QColor& color)
     format.setBackground(color);
 
     for (int i = startLine; i <= endLine; ++i) {
-        QTextBlock block = doc->findBlockByNumber(i); // 行号�?0开�?
+        QTextBlock block = doc->findBlockByNumber(i); // 行号�?0开�?
         if (block.isValid()) {
             cursor.setPosition(block.position());
             cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
@@ -249,7 +255,7 @@ void MainWindow::addInfoToQTableWidget(QString& type, QString& id, QString& text
 
 void MainWindow::SplitContent(QString&str)
 {
-    // 将内容按行分�?
+    // 将内容按行分�?
    
     QStringList lines = str.split('\n', QString::SkipEmptyParts);
 
@@ -330,7 +336,7 @@ void MainWindow::SpitStrAndExportUiTextEdit(QString str)
         
     }
    
-    QRegularExpression re1(R"((PUSHBUTTON)\s+\"(.*)\",(\w+),(\d+),(\d+),(\d+),(\d+),(.+))");//能查中中文�?//同时能找到defbutton
+    QRegularExpression re1(R"((PUSHBUTTON)\s+\"(.*)\",(\w+),(\d+),(\d+),(\d+),(\d+),(.+))");//能查中中文�?//同时能找到defbutton
    
     QRegularExpressionMatchIterator i1 = re1.globalMatch(str);
     while (i1.hasNext())
@@ -369,7 +375,7 @@ void MainWindow::SpitStrAndExportUiTextEdit(QString str)
             return;
         }
     }
-    QRegularExpression re3(R"((PUSHBUTTON)\s+\"(.?)\",(\w+),(\d+),(\d+),(\d+),(\d+),(.+))");//能查中button的空名字或者空的�?
+    QRegularExpression re3(R"((PUSHBUTTON)\s+\"(.?)\",(\w+),(\d+),(\d+),(\d+),(\d+),(.+))");//能查中button的空名字或者空的�?
     QRegularExpressionMatchIterator i3 = re3.globalMatch(str);
     while (i3.hasNext())
     {
@@ -388,7 +394,7 @@ void MainWindow::SpitStrAndExportUiTextEdit(QString str)
             return;
         }
     }
-    QRegularExpression re4(R"((GROUPBOX)\s + \"(.*)\", (\w+), (\d+), (\d+), (\d+), (\d+), (.+))");//能查中button的空名字或者空的�?
+    QRegularExpression re4(R"((GROUPBOX)\s + \"(.*)\", (\w+), (\d+), (\d+), (\d+), (\d+), (.+))");//能查中button的空名字或者空的�?
     QRegularExpressionMatchIterator i4 = re4.globalMatch(str);
     while (i4.hasNext())
     {
@@ -415,12 +421,22 @@ void MainWindow::SpitStrAndExportUiTextEdit(QString str)
         if (match.captured(1)=="LTEXT"|| match.captured(1) == "RTEXT"|| match.captured(1) == "PUSHBUTTON"|| match.captured(1) == "DEFPUSHBUTTON") {
             QString controlType = match.captured(1);
             QString controlText = match.captured(2);
-            QString controlId = match.captured(3);
+            QString controlId = match.captured(3).trimmed();
+           
             //QString subControlType = match.captured(4);
             QString x = match.captured(4);
             QString y = match.captured(5);
             QString width = match.captured(6);
             QString height = match.captured(7);
+			if (controlId.indexOf(",") > 0)
+			{
+				auto list = controlId.split(",");
+				controlId = list[0];
+				x = list[1];
+				y = match.captured(4);
+				width = match.captured(5);
+				height = match.captured(6);
+			}
             outToUitextedit(controlType, controlId, controlText, x, y, width, height);
           
             return;
@@ -500,6 +516,10 @@ void MainWindow::converDialog(QString str)
         QRegularExpressionMatch match = i6.next();
         if (1) {
             QString DialogID = match.captured(1);
+            if (DialogID.startsWith("IDD_"))
+            {
+				DialogID.remove(0,4);
+            }
            
             QString subControlType = match.captured(2);
 
@@ -510,7 +530,7 @@ void MainWindow::converDialog(QString str)
             
            
 
-            // 定义正则表达式匹�? FONT 关键字后面的内容
+            // 定义正则表达式匹�? FONT 关键字后面的内容
             QRegularExpression fontRegex(R"(FONT\s+(\d+),\s*\"([^\"]+)\")");
             QRegularExpressionMatch match = fontRegex.match(str);
             QString fontSize=9;
@@ -548,6 +568,10 @@ void MainWindow::converDialog(QString str)
         QRegularExpressionMatch match = i7.next();
         if (1) {
             QString DialogID = match.captured(1);
+			if (DialogID.startsWith("IDD_"))
+			{
+				DialogID.remove(0, 4);
+			}
 
             QString subControlType = match.captured(2);
 
@@ -567,15 +591,16 @@ void MainWindow::converDialog(QString str)
     }
 }
 
-//分割字符�?
+//分割字符�?
 void MainWindow::on_pushButtonConvert_clicked()
 {
     if (ui->textEditRcKeyContent->toPlainText().isEmpty())return;
     QString str = ui->textEditRcKeyContent->toPlainText();
     SplitContent(str);
+	outputBindWidgets();
 }
 
-//(\w+)\s+"(.*)",(\w+),(\d+),(\d+),(\d+),(\d+)  能匹配绝大部�?
+//(\w+)\s+"(.*)",(\w+),(\d+),(\d+),(\d+),(\d+)  能匹配绝大部�?
 //输出文件
 void MainWindow::exportUIfile()
 {
@@ -736,3 +761,26 @@ void MainWindow::compileopenfile()
 
 }
 
+void MainWindow::outputBindWidgets() { QString text = R"(
+void bindWidget(Ui::%1* ui, MFCWinFunc *winFunc)
+{
+)";
+    for (int i = 0; i < ui->tableWidget->rowCount(); i++)
+    {
+    	QString id = ui->tableWidget->item(i, 1)->text();
+        if (ui->tableWidget->item(i, 0)->text() == "DIALOG")
+        {
+		   text = text.arg(id);
+        }
+        else
+        {
+		   if (id == "IDC_STATIC")
+				continue;
+		   QString lowId = id;
+		   lowId[0] = lowId[0].toLower();
+		   text += QString("\twinFunc->bindWidget(%1, ui->%3);\n").arg(id).arg(lowId);
+        }
+    }
+	text += "}\n";
+	ui->textEditBindWidgets->setText(text);
+}

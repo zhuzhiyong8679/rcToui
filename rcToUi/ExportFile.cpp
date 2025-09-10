@@ -6,6 +6,8 @@
 #include "QTextDocument" 
 #include "QMessageBox"
 #include "QProcess"
+constexpr float scaleFactory = 1.9; 
+
 void MainWindow::ExportUItoFile(QString&mfilename,QString &str)
 {
     // 文件名
@@ -50,7 +52,11 @@ void MainWindow::ExportUItoFile(QString&mfilename,QString &str)
 
 QString MainWindow::Start_the_assembly(QString type, QString Id, QString text, QString x, QString y, QString width, QString height)
 {
-    
+	x = QString::number((int)(x.toInt() * scaleFactory));
+	y = QString::number((int)(y.toInt() * scaleFactory));
+	width = QString::number((int)(width.toInt() * scaleFactory));
+	height = QString::number((int)(height.toInt() * scaleFactory));
+	Id[0] = Id[0].toLower();
     QString str=R"(<widget class="_type" name="_id">
    <property name="geometry">
     <rect>
@@ -88,17 +94,21 @@ QString MainWindow::Start_the_assembly(QString type, QString Id, QString text, Q
 
 QString MainWindow::setHeadfilestrQWidget(DialogMes&dialogmessage)
 {
-    QString str = 
-        R"(<?xml version="1.0" encoding="UTF-8"?>
+	QString x = QString::number((int)(dialogmessage.x.toInt() * scaleFactory));
+	QString y = QString::number((int)(dialogmessage.y.toInt() * scaleFactory));
+	QString width = QString::number((int)(dialogmessage.width.toInt() * scaleFactory));
+	QString height = QString::number((int)(dialogmessage.heigth.toInt() * scaleFactory));
+	QString str =
+		R"(<?xml version="1.0" encoding="UTF-8"?>
 <ui version = "4.0" >
-<class>QWidget</class>
-<widget class = " QWidget" name = "MainWindow_name">"
+<class>%1</class>
+<widget class = "QWidget" name = "%2">"
 <property name="geometry">
 <rect>
-<x>dialog_x</x>
-<y>dialog_y</y>
- <width>dialog_width</width>
-<height>dialog_height</height>
+<x>%3</x>
+<y>%4</y>
+ <width>%5</width>
+<height>%6</height>
 </rect>
 </property>
 <property name="font">
@@ -108,30 +118,29 @@ QString MainWindow::setHeadfilestrQWidget(DialogMes&dialogmessage)
 </font>
 </property>
 <property name="windowTitle">
-<string>_titleName</string>
+<string>%7</string>
 </property>)";
-    str.replace("MainWindow_name", dialogmessage.id).
-        replace("dialog_x", dialogmessage.x)
-        .replace("dialog_y", dialogmessage.y)
-        .replace("dialog_width", dialogmessage.width)
-        .replace("dialog_height", dialogmessage.heigth)  
-        .replace("_titleName", dialogmessage.text);
-    return str;
+	str = str.arg(dialogmessage.id).arg(dialogmessage.id.toLower()).arg(x).arg(y).arg(width).arg(height).arg(dialogmessage.text);
+	return str;
 }
 
 QString MainWindow::setHeadfilestrQDialog(DialogMes& dialogmessage)
 {
+	QString x = QString::number((int)(dialogmessage.x.toInt() * scaleFactory));
+	QString y = QString::number((int)(dialogmessage.y.toInt() * scaleFactory));
+	QString width = QString::number((int)(dialogmessage.width.toInt() * scaleFactory));
+	QString height = QString::number((int)(dialogmessage.heigth.toInt() * scaleFactory));
     QString str =
         R"(<?xml version="1.0" encoding="UTF-8"?>
 <ui version = "4.0" >
-<class>QDialog</class>
-<widget class = " QDialog" name = "MainWindow_name">"
+<class>%1</class>
+<widget class = "QDialog" name = "%2">"
 <property name="geometry">
 <rect>
-<x>dialog_x</x>
-<y>dialog_y</y>
- <width>dialog_width</width>
-<height>dialog_height</height>
+<x>%3</x>
+<y>%4</y>
+ <width>%5</width>
+<height>%6</height>
 </rect>
 </property>
 <property name="font">
@@ -141,14 +150,14 @@ QString MainWindow::setHeadfilestrQDialog(DialogMes& dialogmessage)
 </font>
 </property>
 <property name="windowTitle">
-<string>_titleName</string>
+<string>%7</string>
 </property>)";
-    str.replace("MainWindow_name", dialogmessage.id).
-        replace("dialog_x", dialogmessage.x)
-        .replace("dialog_y", dialogmessage.y)
-        .replace("dialog_width", dialogmessage.width)
-        .replace("dialog_height", dialogmessage.heigth)
-        .replace("_titleName", dialogmessage.text);
+	str = str.arg(dialogmessage.id)
+	.arg(dialogmessage.id.toLower())
+		.arg(x)
+		.arg(y)
+		.arg(width).arg(height)
+		.arg(dialogmessage.text);
     return str;
 
 }

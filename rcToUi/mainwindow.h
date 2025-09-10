@@ -58,6 +58,7 @@ private:
     void outToUitextedit(QString& type, QString& id, QString& textContent, QString& x, QString& y, QString& width, QString& height);
     void outDialogMessage(QString& ID, QString& Font, QString& size, QString& _text, QString& x, QString& y, QString& _width, QString& _height);
     void converDialog(QString str);
+	void outputBindWidgets();
     
 private:
     Ui::MainWindow *ui;
